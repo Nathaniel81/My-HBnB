@@ -1,9 +1,17 @@
 #!/usr/bin/python3
 
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
+
 import cmd
 import models
 
+
 modLst = ["BaseModel", "User", "Place", "State", "City", "Amenity", "Review"]
+
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
@@ -36,12 +44,15 @@ class HBNBCommand(cmd.Cmd):
             from models.city import City
             from models.review import Review
             from models.amenity import Amenity
+
             obj = eval(args)()
             obj.save()
             print(obj.id)
 
     def do_show(self, args):
-       """Doc"""
+       """Prints the string representation of an instance
+       based on the class name and id"""
+
        argss = args.split()
        if len(args) == 0:
            print("** class name missing **")
@@ -56,7 +67,9 @@ class HBNBCommand(cmd.Cmd):
             print(models.storage.all()[k])
 
     def do_destroy(self, args):
-        """Doc"""
+        """Deletes an instance based on the class name
+        and id (save the change into the JSON file)"""
+
         argss = args.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -71,7 +84,9 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_all(self, args):
-        """Doc"""
+        """ Prints all string representation of all instances
+        based or not on the class name."""
+
         if len(args) == 0:
             nwLst = []
             for obj in models.storage.all().values():
@@ -87,7 +102,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, args):
-        """Doc"""
+        """Updates an instance based on the class name
+        and id by adding or updating attribute
+        (save the change into the JSON file)"""
+
         argss = args.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -109,20 +127,12 @@ class HBNBCommand(cmd.Cmd):
             pass
 
     def do_count(self, args):
-        """Doc"""
+        """Counts the number of instances of a class"""
         counter = 0
         for obj in models.storage.all().values():
             if args.split('.')[0] == type(obj).__name__:
                 counter += 1
         print(counter)
-
-
-
-
-
-
-
-
 
 
 if __name__ == '__main__':
